@@ -1,13 +1,20 @@
 {
-  "name": "app",
+  "name": "fragments-ui",
   "private": true,
-  "version": "0.0.0",
+  "description": "Fragments UI testing web app",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
+  },
+  "author": "Andrii Sych asych@myseneca.ca",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SychAndrii/fragments-ui.git"
   },
   "dependencies": {
     "react": "^18.2.0",
