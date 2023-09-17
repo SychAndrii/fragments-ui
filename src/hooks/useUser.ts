@@ -4,6 +4,8 @@ import { getUser } from "../auth";
 
 const useUser = () => {
   const [user, setUser] = useState<null | User>(null);
+  console.log(user);
+  
   useEffect(() => {
     getCurrentUser();
 

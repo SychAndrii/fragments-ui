@@ -4,10 +4,14 @@ import Login from "./Login";
 import Logout from "./Logout";
 import Greetings from "./Greetings";
 import useUser from "../hooks/useUser";
+import { getUserFragments } from "../api";
 
 function App() {
   const user = useUser();
   const isLoggedIn = user != null;
+  if(user) {
+    console.log(getUserFragments(user));
+  }
 
   return (
     <div>
