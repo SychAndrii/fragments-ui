@@ -1,5 +1,5 @@
-import { Auth } from "../auth";
-import Button from "../components/Button";
+import { Auth } from "../../auth";
+import Button from "../../components/ui/Button";
 
 type Props = {
   isDisabled: boolean;
