@@ -1,5 +1,5 @@
-import { Form } from "react-router-dom";
 import Button from "../../components/ui/Button";
+import { Form } from "react-router-dom";
 
 const AddFragment = () => {
   return (
@@ -15,8 +15,9 @@ const AddFragment = () => {
         />
         <br />
         <br />
-        <Button type="submit" text="Create and go to fragments page" />
-        <Button type="submit" text="Create and stay on this page" />
+        <div className="mr-5 inline-block">
+          <Button type="submit" value="redirect" text="Create" />
+        </div>
       </Form>
     </>
   );
