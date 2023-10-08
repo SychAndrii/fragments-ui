@@ -3,8 +3,8 @@ import "@aws-amplify/ui-react/styles.css";
 import useUser from "../../hooks/useUser";
 import { useLoaderData } from "react-router-dom";
 
-export async function indexLoader() {
-  const url = `${import.meta.env.VITE_API_URL}/`;
+export function indexLoader() {
+  const url = `${import.meta.env.VITE_URL}/`;
   return fetch(url);
 }
 
