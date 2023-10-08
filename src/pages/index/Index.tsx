@@ -1,6 +1,5 @@
 import "./Index.css";
 import "@aws-amplify/ui-react/styles.css";
-import { useUser } from "../../hooks";
 import { useLoaderData } from "react-router-dom";
 
 export function indexLoader() {
@@ -9,9 +8,7 @@ export function indexLoader() {
 }
 
 function Index() {
-  const user = useUser();
   const data: any = useLoaderData();
-  console.log(data);
 
   return (
     <div>
@@ -20,7 +17,7 @@ function Index() {
           "Fragments microservice is ready for work."
         ) : (
           <span>
-            Fragments mciroservice is <b>NOT</b> ready to work!
+            Fragments microservice is <b>NOT</b> ready to work!
           </span>
         )}
       </div>

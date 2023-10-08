@@ -5,6 +5,7 @@ import Logout from "../../pages/index/Logout";
 const Header = () => {
   const user = useUser();
   const isLoggedIn = user != null;
+  console.log(user);
 
   return (
     <header className="text-center bg-main p-5 w-full">

@@ -8,7 +8,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     getUser().then((user) => setUser(user));
-  }, []);
+  }, [window.location.pathname]);
 
   return (
     <>

@@ -16,6 +16,7 @@ import Fragments, {
 import AddFragment from "./pages/fragment-add/AddFragment";
 import Error from "./Error";
 import Fragment, { fragmentLoader } from "./pages/fragment/Fragment";
+import UserProvider from "./providers/UserProvider";
 import RouteGuard from "./RouteGuard";
 
 const router = createBrowserRouter(
@@ -64,6 +65,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );
