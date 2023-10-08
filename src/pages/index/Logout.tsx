@@ -8,7 +8,7 @@ type Props = {
 const Logout = ({ isDisabled }: Props) => {
   return (
     <div>
-      <Button text="Logout" isDisabled={isDisabled} clickHandler={logout} />
+      <Button text="Logout" disabled={isDisabled} clickHandler={logout} />
     </div>
   );
 

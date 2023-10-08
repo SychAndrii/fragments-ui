@@ -11,10 +11,6 @@ const Navigation = () => {
       href: "/fragments",
     },
     {
-      text: "Particular fragment",
-      href: "/fragment",
-    },
-    {
       text: "Add fragment",
       href: "/fragment/add",
     },
@@ -23,7 +19,7 @@ const Navigation = () => {
   return (
     <div id="nav" className=" h-full bg-main p-4 flex flex-col text-right">
       {links.map((link) => (
-        <div>
+        <div key={link.href}>
           <NavLink
             className={({ isActive }) => {
               return `text-highlight text-xl hover:text-highlightDarken ${
