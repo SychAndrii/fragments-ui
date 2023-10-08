@@ -15,7 +15,8 @@ const AddFragment = () => {
         />
         <br />
         <br />
-        <Button type="submit" text="Create" />
+        <Button type="submit" text="Create and go to fragments page" />
+        <Button type="submit" text="Create and stay on this page" />
       </Form>
     </>
   );

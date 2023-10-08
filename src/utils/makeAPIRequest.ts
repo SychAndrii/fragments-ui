@@ -10,12 +10,16 @@ export default async function makeAPIRequest(
 ) {
   const user = await getUser();
   const url = `${import.meta.env.VITE_API_URL}${path}`;
+
+  // Ensure body is a string if it's not undefined
+  const requestBody = body !== undefined ? body.toString() : undefined;
+
   return fetch(url, {
-    body,
+    body: requestBody,
     method,
     headers: {
-      ...headers,
       ...user?.authorizationHeaders(),
+      ...headers, // Move headers spread operator to the end to ensure it overrides any previous header values
     },
   });
 }
