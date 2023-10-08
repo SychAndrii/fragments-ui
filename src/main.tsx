@@ -39,8 +39,23 @@ const router = createBrowserRouter(
           path="/fragments"
         />
         <Route path="/fragment">
-          <Route path="add" element={<AddFragment />} />
-          <Route path=":id" element={<Fragment />} loader={fragmentLoader} />
+          <Route
+            path="add"
+            element={
+              <RouteGuard>
+                <AddFragment />
+              </RouteGuard>
+            }
+          />
+          <Route
+            path=":id"
+            element={
+              <RouteGuard>
+                <Fragment />
+              </RouteGuard>
+            }
+            loader={fragmentLoader}
+          />
         </Route>
       </Route>
     </Route>

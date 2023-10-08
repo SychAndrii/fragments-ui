@@ -8,10 +8,14 @@ const Header = () => {
 
   return (
     <header className="text-center bg-main p-5 w-full">
-      <div className=" float-left -mt-10">
-        {user && (
-          <h2 className=" text-md">
-            Hello, <b>{user.username}!</b>
+      <div className=" float-left mt-2 text-lg text-regular">
+        {user ? (
+          <h2 className=" ">
+            Hello, <b className=" text-highlight">{user.username}!</b>
+          </h2>
+        ) : (
+          <h2>
+            You are <b>NOT</b> logged in!
           </h2>
         )}
       </div>

@@ -11,20 +11,19 @@ export function indexLoader() {
 function Index() {
   const user = useUser();
   const data: any = useLoaderData();
+  console.log(data);
 
   return (
     <div>
-      {user && (
-        <div className=" text-regular text-md">
-          {data.status == "ok" ? (
-            "Fragments microservice is ready for work."
-          ) : (
-            <span>
-              Fragments mciroservice is <b>NOT</b> ready to work!
-            </span>
-          )}
-        </div>
-      )}
+      <div className=" text-regular text-md">
+        {data.status == "ok" ? (
+          "Fragments microservice is ready for work."
+        ) : (
+          <span>
+            Fragments mciroservice is <b>NOT</b> ready to work!
+          </span>
+        )}
+      </div>
     </div>
   );
 }
