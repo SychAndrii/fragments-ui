@@ -15,6 +15,8 @@ import Fragments, {
 } from "./pages/fragments/Fragments";
 import AddFragment from "./pages/fragment-add/AddFragment";
 import Error from "./Error";
+import Fragment, { fragmentLoader } from "./pages/fragment/Fragment";
+import RouteGuard from "./RouteGuard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,13 +29,18 @@ const router = createBrowserRouter(
           element={<Index />}
         />
         <Route
-          element={<Fragments />}
+          element={
+            <RouteGuard>
+              <Fragments />
+            </RouteGuard>
+          }
           loader={fragmentsLoader}
           action={fragmentsAction}
           path="/fragments"
         />
         <Route path="/fragment">
           <Route path="add" element={<AddFragment />} />
+          <Route path=":id" element={<Fragment />} loader={fragmentLoader} />
         </Route>
       </Route>
     </Route>

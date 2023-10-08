@@ -17,7 +17,7 @@ const Navigation = () => {
   ];
 
   return (
-    <div id="nav" className=" h-full bg-main p-4 flex flex-col text-right">
+    <div id="nav" className=" h-full p-4 flex flex-col text-right">
       {links.map((link) => (
         <div key={link.href}>
           <NavLink

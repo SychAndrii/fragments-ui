@@ -1,6 +1,6 @@
 import "./Index.css";
 import "@aws-amplify/ui-react/styles.css";
-import useUser from "../../hooks/useUser";
+import { useUser } from "../../hooks";
 import { useLoaderData } from "react-router-dom";
 
 export function indexLoader() {

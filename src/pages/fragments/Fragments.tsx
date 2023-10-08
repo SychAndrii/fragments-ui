@@ -1,18 +1,20 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import makeAPIRequest from "../../utils/makeAPIRequest";
 
 export async function fragmentsLoader() {
   return makeAPIRequest("/fragments?expand=1");
 }
 
-export async function fragmentsAction(data: any) {
+export async function fragmentsAction({ request }) {
+  const text = (await request.formData()).get("text");
+
   return makeAPIRequest(
     "/fragments",
     "POST",
     {
       "Content-Type": "text/plain",
     },
-    data.text
+    text
   );
 }
 
@@ -49,12 +51,12 @@ const Fragments = () => {
                 </th>
                 <td className="px-6 py-4">{f.type}</td>
                 <td className="px-6 py-4 text-right">
-                  <a
-                    href={`/fragment/${f.id}`}
+                  <Link
+                    to={`/fragment/${f.id}`}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
                     See Details
-                  </a>
+                  </Link>
                 </td>
               </tr>
             ))}
