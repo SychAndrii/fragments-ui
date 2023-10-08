@@ -7,14 +7,19 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Root from "./Root";
-import ErrorPage from "./ErrorPage";
-import Index from "./pages/index/Index";
+import IndexError from "./pages/index/IndexError";
+import Index, { indexLoader } from "./pages/index/Index";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
-      <Route errorElement={<ErrorPage />}>
-        <Route index element={<Index />} />
+      <Route errorElement={<IndexError />}>
+        <Route
+          loader={indexLoader}
+          index
+          errorElement={<IndexError />}
+          element={<Index />}
+        />
       </Route>
     </Route>
   )

@@ -14,6 +14,10 @@ const Navigation = () => {
       text: "Particular fragment",
       href: "/fragment",
     },
+    {
+      text: "Add fragment",
+      href: "/fragment/add",
+    },
   ];
 
   return (

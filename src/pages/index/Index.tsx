@@ -1,16 +1,28 @@
 import "./Index.css";
 import "@aws-amplify/ui-react/styles.css";
-import Greetings from "./Greetings";
 import useUser from "../../hooks/useUser";
+import { useLoaderData } from "react-router-dom";
+
+export async function indexLoader() {
+  const url = `${import.meta.env.VITE_API_URL}/`;
+  return fetch(url);
+}
 
 function Index() {
   const user = useUser();
+  const data: any = useLoaderData();
 
   return (
     <div>
       {user && (
-        <div>
-          <Greetings />
+        <div className=" text-regular text-md">
+          {data.status == "ok" ? (
+            "Fragments microservice is ready for work."
+          ) : (
+            <span>
+              Fragments mciroservice is <b>NOT</b> ready to work!
+            </span>
+          )}
         </div>
       )}
     </div>

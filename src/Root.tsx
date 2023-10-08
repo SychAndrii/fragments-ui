@@ -10,7 +10,7 @@ const Root = () => {
         <div className=" w-[250px] h-full">
           <Navigation />
         </div>
-        <div>
+        <div className=" p-4 text-regular">
           <Outlet />
         </div>
       </div>
