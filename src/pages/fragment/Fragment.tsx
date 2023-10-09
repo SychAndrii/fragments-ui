@@ -12,18 +12,19 @@ export async function fragmentLoader(args: LoaderFunctionArgs<Params>) {
   const { params } = args;
   const res = await makeAPIRequest(`/fragments/${params.id}`);
   const content = await res.text();
+  const location = `${import.meta.env.VITE_API_URL}/fragments/${params.id}`;
 
   return {
     content,
     id: params.id,
     size: +res.headers.get("Content-Length")!,
     type: res.headers.get("Content-Type"),
+    location,
   };
 }
 
 const Fragment = () => {
   const data = useLoaderData() as FragmentResponse;
-  console.log(data);
 
   return (
     <>
@@ -49,6 +50,12 @@ const Fragment = () => {
         Content:{" "}
         <span>
           <b>{data.content}</b>
+        </span>
+      </h3>
+      <h3>
+        Location:{" "}
+        <span>
+          <b>{data.location}</b>
         </span>
       </h3>
     </>

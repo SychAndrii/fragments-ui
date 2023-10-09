@@ -3,4 +3,5 @@ export default interface FragmentResponse {
   id: string;
   size: number;
   type: string;
+  location: string;
 }
