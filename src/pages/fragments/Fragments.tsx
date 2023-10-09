@@ -1,11 +1,12 @@
 import { Link, useLoaderData } from "react-router-dom";
 import makeAPIRequest from "../../utils/makeAPIRequest";
+import AllFragmentsResponse from "../../interface/api/AllFragmentsResponse";
 
 export async function fragmentsLoader() {
   return makeAPIRequest("/fragments?expand=1");
 }
 
-export async function fragmentsAction({ request }) {
+export async function fragmentsAction({ request }: { request: Request }) {
   const text = (await request.formData()).get("text");
 
   return makeAPIRequest(
@@ -19,8 +20,7 @@ export async function fragmentsAction({ request }) {
 }
 
 const Fragments = () => {
-  const data: any = useLoaderData();
-  console.log(data);
+  const data = useLoaderData() as AllFragmentsResponse;
 
   return (
     <>

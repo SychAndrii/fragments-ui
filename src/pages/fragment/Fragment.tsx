@@ -1,22 +1,29 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, LoaderFunctionArgs } from "react-router-dom";
 import makeAPIRequest from "../../utils/makeAPIRequest";
+import FragmentResponse from "../../interface/api/FragmentResponse";
 
-export async function fragmentLoader({ params }) {
+type Params = {
+  params: {
+    id: string;
+  };
+};
+
+export async function fragmentLoader(args: LoaderFunctionArgs<Params>) {
+  const { params } = args;
   const res = await makeAPIRequest(`/fragments/${params.id}`);
   const content = await res.text();
-  console.log(res.headers.get("Content-Type"));
-  console.log(res.headers.get("Content-Length"));
 
   return {
     content,
     id: params.id,
-    size: res.headers.get("Content-Length"),
+    size: +res.headers.get("Content-Length")!,
     type: res.headers.get("Content-Type"),
   };
 }
 
 const Fragment = () => {
-  const data = useLoaderData();
+  const data = useLoaderData() as FragmentResponse;
+  console.log(data);
 
   return (
     <>

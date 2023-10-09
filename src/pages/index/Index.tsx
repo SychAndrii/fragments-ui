@@ -1,6 +1,7 @@
 import "./Index.css";
 import "@aws-amplify/ui-react/styles.css";
 import { useLoaderData } from "react-router-dom";
+import HealthCheckResponse from "../../interface/api/HealthCheckResponse";
 
 export function indexLoader() {
   const url = `${import.meta.env.VITE_URL}/`;
@@ -8,7 +9,7 @@ export function indexLoader() {
 }
 
 function Index() {
-  const data: any = useLoaderData();
+  const data = useLoaderData() as HealthCheckResponse;
 
   return (
     <div>

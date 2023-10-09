@@ -1,12 +1,11 @@
-import { Amplify, Auth } from 'aws-amplify';
-import User from './interface/User';
-
+import { Amplify, Auth } from "aws-amplify";
+import User from "./interface/data/User";
 
 // Configure our Auth object to use our Cognito User Pool
 Amplify.configure({
   Auth: {
     // Amazon Region. We can hard-code this (we always use the us-east-1 region)
-    region: 'us-east-1',
+    region: "us-east-1",
 
     // Amazon Cognito User Pool ID
     userPoolId: import.meta.env.VITE_AWS_COGNITO_POOL_ID,
@@ -24,7 +23,7 @@ Amplify.configure({
       // your app's OpenID Connect scopes, go to Amazon Cognito in the AWS Console
       // then: Amazon Cognito > User pools > {your user pool} > App client > {your client}
       // and look in the "Hosted UI" section under "OpenID Connect scopes".
-      scope: ['email', 'phone', 'openid'],
+      scope: ["email", "phone", "openid"],
 
       // NOTE: these must match what you have specified in the Hosted UI
       // app settings for Callback and Redirect URLs (e.g., no trailing slash).
@@ -32,7 +31,7 @@ Amplify.configure({
       redirectSignOut: import.meta.env.VITE_OAUTH_SIGN_OUT_REDIRECT_URL,
 
       // We're using the Access Code Grant flow (i.e., `code`)
-      responseType: 'code',
+      responseType: "code",
     },
   },
 });
@@ -51,13 +50,14 @@ async function getUser() {
     const username = currentAuthenticatedUser.username;
 
     // If that didn't throw, we have a user object, and the user is authenticated
-    console.log('The user is authenticated', username);
+    console.log("The user is authenticated", username);
 
     // Get the user's Identity Token, which we'll use later with our
     // microservice. See discussion of various tokens:
     // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
     const idToken = currentAuthenticatedUser.signInUserSession.idToken.jwtToken;
-    const accessToken = currentAuthenticatedUser.signInUserSession.accessToken.jwtToken;
+    const accessToken =
+      currentAuthenticatedUser.signInUserSession.accessToken.jwtToken;
 
     // Return a simplified "user" object
     return {
@@ -65,11 +65,11 @@ async function getUser() {
       idToken,
       accessToken,
       // Include a simple method to generate headers with our Authorization info
-      authorizationHeaders: (type = 'application/json') => {
+      authorizationHeaders: (type = "application/json") => {
         const headers: {
-            [key: string]: string
-        } = { 'Content-Type': type };
-        headers['Authorization'] = `Bearer ${idToken}`;
+          [key: string]: string;
+        } = { "Content-Type": type };
+        headers["Authorization"] = `Bearer ${idToken}`;
         return headers;
       },
     } as User;

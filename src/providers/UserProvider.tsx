@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { UserContext } from "../context";
 import { getUser } from "../auth";
-import User from "../interface/User";
+import User from "../interface/data/User";
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<null | User>(null);
