@@ -7,6 +7,8 @@ FROM nginx:stable
 # https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
 ARG NODE_VERSION=16
 
+# Set shell to handle pipe failures
+SHELL ["/bin/sh", "-o", "pipefail", "-c"]
 
 # Install node.js and a build toolchain via apt-get, cleaing up when done.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run
