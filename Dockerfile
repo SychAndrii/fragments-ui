@@ -1,6 +1,6 @@
 ### Stage 0: Installing dependencies
 
-FROM nginx:1.25.3-alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63332c3d0bf7a4bb77 AS dependencies
+FROM node:lts-alpine3.17@sha256:b45e71e98bd0eecd4b694c7fb0281e08e06a384de26a986d241d348926692318 AS dependencies
 
 #Metadata
 LABEL maintainer="Andrii Sych <asych@myseneca.ca>" \
@@ -19,7 +19,7 @@ RUN npm ci --only=production
 
 ### Stage 1: Building the server
 
-FROM nginx:1.25.3-alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63332c3d0bf7a4bb77 AS build
+FROM node:lts-alpine3.17@sha256:b45e71e98bd0eecd4b694c7fb0281e08e06a384de26a986d241d348926692318 AS build
 
 WORKDIR /app
 
@@ -43,10 +43,8 @@ COPY --from=dependencies \
 # Copy source code into the image
 COPY --chown=nginx:nginx . .
 
-USER nginx
-
 # Build the serever
-CMD ["npm", "run" "build"]
+RUN npm run build
 
 ### Stage 2: Running server
 
@@ -54,7 +52,7 @@ FROM nginx:1.25.3-alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63
 
 # Copy the package.json and package-lock.json
 COPY --from=build \
-     --chown=nginx:nginx /app/dist /usr/share/nginx/html
+     --chown=nginx:nginx /app/dist/ /usr/share/nginx/html
 
 # We run our service on port 80
 EXPOSE 5173

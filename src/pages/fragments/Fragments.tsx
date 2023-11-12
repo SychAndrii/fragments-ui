@@ -7,13 +7,15 @@ export async function fragmentsLoader() {
 }
 
 export async function fragmentsAction({ request }: { request: Request }) {
-  const text = (await request.formData()).get("text");
+  const formData = (await request.formData());
+  const text = formData.get("text") as string;
+  const type = formData.get("type") as string;
 
   return makeAPIRequest(
     "/fragments",
     "POST",
     {
-      "Content-Type": "text/plain",
+      "Content-Type": type,
     },
     text
   );

@@ -14,14 +14,15 @@ export default async function makeAPIRequest<T>(
   // Ensure body is a string if it's not undefined
   const requestBody = body !== undefined ? JSON.stringify(body) : undefined;
   console.log("Sending payload:", requestBody);
+  console.log("Sending headers:", headers);
+  
 
   return fetch(url, {
     body: requestBody,
     method,
     headers: {
       ...user?.authorizationHeaders(),
-      ...headers, // Move headers spread operator to the end to ensure it overrides any previous header values
-      "Content-Type": "application/json", // Add this line to specify the content type as JSON
+      ...headers
     },
   });
 }
