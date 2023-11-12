@@ -13,7 +13,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential=12.9 \ 
-    nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PORT=5173 \
