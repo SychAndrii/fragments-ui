@@ -5,10 +5,10 @@ name: ci
 on:
   pull_request:
     branches:
-      - main
+      - master
   push:
     branches:
-      - main
+      - master
 
 # Defines the jobs to run
 jobs:
