@@ -8,14 +8,14 @@ import {
 } from "react-router-dom";
 import Root from "./Root";
 import IndexError from "./pages/index/IndexError";
-import Index, { indexLoader } from "./pages/index/Index";
-import Fragments, {
-  fragmentsAction,
-  fragmentsLoader,
-} from "./pages/fragments/Fragments";
+import Index from "./pages/index/Index";
+import indexLoader from "./pages/index/indexLoader";
+import fragmentLoader from "./pages/fragment/fragmentLoader";
+import fragmentsAction from "./pages/fragments/fragmentsAction";
+import Fragments from "./pages/fragments/Fragments";
 import AddFragment from "./pages/fragment-add/AddFragment";
 import Error from "./Error";
-import Fragment, { fragmentLoader } from "./pages/fragment/Fragment";
+import Fragment from "./pages/fragment/Fragment";
 import UserProvider from "./providers/UserProvider";
 import RouteGuard from "./RouteGuard";
 import '../style.css'
@@ -36,7 +36,7 @@ const router = createBrowserRouter(
               <Fragments />
             </RouteGuard>
           }
-          loader={fragmentsLoader}
+          loader={fragmentLoader}
           action={fragmentsAction}
           path="/fragments"
         />
