@@ -54,7 +54,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
         env:
-          DOCKERHUB_REPO: fushion23/fragments
+          DOCKERHUB_REPO: fushion23/fragments_ui
           SHA_TAG: sha-${{ github.sha }}
         uses: docker/build-push-action@v4
         with:

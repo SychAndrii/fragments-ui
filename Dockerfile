@@ -5,15 +5,19 @@ FROM nginx:stable
 
 # Pick a version: 19, 18, 17, 16, 14, 12, lts, current, see:
 # https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
-ARG NODE_VERSION=current
+ARG NODE_VERSION=16
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 
 # Install node.js and a build toolchain via apt-get, cleaing up when done.
 # See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run
 # https://explainshell.com/explain?cmd=curl+-fsSL+https%3A%2F%2Fdeb.nodesource.com%2Fsetup_%24%7BNODE_VERSION%7D.x+%7C+bash+-
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
-    apt-get update && apt-get install -y \
-    build-essential \
-    nodejs \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential=12.4ubuntu1 \
+    nodejs=10.19.0-1nodesource1 \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PORT=5173 \
