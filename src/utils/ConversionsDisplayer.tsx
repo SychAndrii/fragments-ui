@@ -32,8 +32,7 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
                     const conversion = accessibleConversions[index - 1];
                     const res = await makeAPIRequest(`/fragments/${id}.${conversion}`);
                     const content = await res.text();
-                    console.log(content);
-                    
+
                     setContents({
                         ...contents,
                         [conversion]: content
@@ -50,13 +49,15 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
                 </TabList>
 
                 <TabPanel>
-                    <FragmentBodyDisplayer type={shortType} body={data} />
+                    <div className=" max-w-6xl">
+                        <FragmentBodyDisplayer type={shortType} body={data} />
+                    </div>
                 </TabPanel>
                 {
                     accessibleConversions.map((conversion, index) => {
                         return (
                             <TabPanel key={index}>
-                                <div className=" max-w-full">
+                                <div className=" max-w-6xl">
                                     <FragmentBodyDisplayer type={conversion} body={contents[conversion]} />
                                 </div>
                             </TabPanel>

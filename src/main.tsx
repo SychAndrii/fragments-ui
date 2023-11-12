@@ -18,6 +18,7 @@ import Error from "./Error";
 import Fragment, { fragmentLoader } from "./pages/fragment/Fragment";
 import UserProvider from "./providers/UserProvider";
 import RouteGuard from "./RouteGuard";
+import '../style.css'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
