@@ -1,30 +1,22 @@
-### Stage 0: Installing dependencies
+# Build and serve fragments-ui with nginx
 
-FROM node:lts-alpine3.17@sha256:b45e71e98bd0eecd4b694c7fb0281e08e06a384de26a986d241d348926692318 AS dependencies
+# Start with nginx on Debian
+FROM nginx:stable
 
-#Metadata
-LABEL maintainer="Andrii Sych <asych@myseneca.ca>" \
-      description="Fragments node.js front-end"
+# Pick a version: 19, 18, 17, 16, 14, 12, lts, current, see:
+# https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
+ARG NODE_VERSION=current
 
-# Use /app as our working directory
-WORKDIR /app
+# Install node.js and a build toolchain via apt-get, cleaing up when done.
+# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run
+# https://explainshell.com/explain?cmd=curl+-fsSL+https%3A%2F%2Fdeb.nodesource.com%2Fsetup_%24%7BNODE_VERSION%7D.x+%7C+bash+-
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get update && apt-get install -y \
+    build-essential \
+    nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the package.json and package-lock.json
-COPY --chown=nginx:nginx package.json package-lock.json ./
-
-# Install node dependencies defined in package-lock.json
-RUN npm ci --only=production
-
-################################################################################################
-
-### Stage 1: Building the server
-
-FROM node:lts-alpine3.17@sha256:b45e71e98bd0eecd4b694c7fb0281e08e06a384de26a986d241d348926692318 AS build
-
-WORKDIR /app
-
-# We default to use port 80 when using our service in production
-ENV PORT=80 \
+ENV PORT=5173 \
     NODE_ENV=production \
     NPM_CONFIG_LOGLEVEL=warn \
     NPM_CONFIG_COLOR=false \
@@ -36,26 +28,21 @@ ENV PORT=80 \
     VITE_OAUTH_SIGN_IN_REDIRECT_URL=http://localhost:5173 \
     VITE_OAUTH_SIGN_OUT_REDIRECT_URL=http://localhost:5173
 
-# Copy cached dependencies from previous stage so we don't have to download
-COPY --from=dependencies \
-     --chown=nginx:nginx /app /app
+# Use /usr/local/src/fragments-ui as our working directory
+WORKDIR /usr/local/src/fragments-ui
 
-# Copy source code into the image
-COPY --chown=nginx:nginx . .
+# Copy all of our source in
+COPY . .
 
-# Build the serever
-RUN npm run build
+# Install node dependencies defined in package.json and package-lock.json
+RUN npm ci
 
-### Stage 2: Running server
+# Run the parcel build in order to create ./dist, then
+# copy all of the contents of dist/ to the location where
+# nginx expects to find our HTML web content.  See
+# https://explainshell.com/explain?cmd=cp+-a+.%2Fdist%2F.+%2Fusr%2Fshare%2Fnginx%2Fhtml%2F
+RUN npm run build && \
+    cp -a ./dist/. /usr/share/nginx/html/
 
-FROM nginx:1.25.3-alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63332c3d0bf7a4bb77 AS running
-
-# Copy the package.json and package-lock.json
-COPY --from=build \
-     --chown=nginx:nginx /app/dist/ /usr/share/nginx/html
-
-# We run our service on port 80
+# nginx will be running on port 80
 EXPOSE 5173
-
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-  CMD curl --verbose --fail localhost:5173 || exit 1
