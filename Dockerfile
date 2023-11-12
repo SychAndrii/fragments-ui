@@ -44,13 +44,8 @@ ENV PORT=5173 \
     VITE_OAUTH_SIGN_IN_REDIRECT_URL=http://localhost:5173 \
     VITE_OAUTH_SIGN_OUT_REDIRECT_URL=http://localhost:5173
 
-# Use /usr/local/src/fragments-ui as our working directory
-WORKDIR /usr/local/src/fragments-ui
-
-# Copy all of our source in
-COPY --from=build . .
-
-RUN cp -a ./dist/. /usr/share/nginx/html/
+# Copy all of our source including the dist directory
+COPY --from=build /app/dist /usr/share/nginx/html/
 
 # nginx will be running on port 80
 EXPOSE 80
