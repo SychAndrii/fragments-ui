@@ -50,7 +50,7 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
 
                 <TabPanel>
                     <div className=" max-w-6xl">
-                        <FragmentBodyDisplayer type={shortType} body={data} />
+                        <FragmentBodyDisplayer body={data} />
                     </div>
                 </TabPanel>
                 {
@@ -58,7 +58,7 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
                         return (
                             <TabPanel key={index}>
                                 <div className=" max-w-6xl">
-                                    <FragmentBodyDisplayer type={conversion} body={contents[conversion]} />
+                                    <FragmentBodyDisplayer body={contents[conversion]} />
                                 </div>
                             </TabPanel>
                         )

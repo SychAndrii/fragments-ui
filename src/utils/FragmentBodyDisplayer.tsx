@@ -1,4 +1,4 @@
-const FragmentBodyDisplayer = ({ type, body }: { type: string, body: string }) => {
+const FragmentBodyDisplayer = ({ body }: { body: string }) => {
   return body;
 }
 
