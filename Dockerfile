@@ -1,5 +1,3 @@
-# Build and serve fragments-ui with nginx
-
 # Start with nginx on Debian
 FROM nginx:stable
 
@@ -8,15 +6,13 @@ FROM nginx:stable
 ARG NODE_VERSION=16
 
 # Set shell to handle pipe failures
-SHELL ["/bin/sh", "-o", "pipefail", "-c"]
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install node.js and a build toolchain via apt-get, cleaing up when done.
-# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run
-# https://explainshell.com/explain?cmd=curl+-fsSL+https%3A%2F%2Fdeb.nodesource.com%2Fsetup_%24%7BNODE_VERSION%7D.x+%7C+bash+-
+# Install node.js and a build toolchain via apt-get, cleaning up when done
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    build-essential \
+    build-essential=1.24.0 \ 
     nodejs \
     && rm -rf /var/lib/apt/lists/*
 
