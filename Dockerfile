@@ -45,4 +45,4 @@ RUN npm run build && \
     cp -a ./dist/. /usr/share/nginx/html/
 
 # nginx will be running on port 80
-EXPOSE 5173
+EXPOSE 80
