@@ -1,7 +1,7 @@
 import { useLoaderData, LoaderFunctionArgs } from "react-router-dom";
 import makeAPIRequest from "../../utils/makeAPIRequest";
 import FragmentResponse from "../../interface/api/FragmentResponse";
-import FragmentBodyDisplayer from "../../utils/fragmentBodyDisplayer";
+import ConversionsDisplayer from "../../utils/ConversionsDisplayer";
 
 type Params = {
   params: {
@@ -28,7 +28,7 @@ export async function fragmentLoader(args: LoaderFunctionArgs<Params>) {
 const Fragment = () => {
   const data = useLoaderData() as FragmentResponse;
   console.log(data);
-  
+
   return (
     <>
       <h3>
@@ -57,8 +57,8 @@ const Fragment = () => {
       </h3>
       <h3>
         Content:{" "}
-        <FragmentBodyDisplayer type={data.type} body={data.content} />
       </h3>
+      <ConversionsDisplayer type={data.type} data={data.content} id={data.id} />
     </>
   );
 };

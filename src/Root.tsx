@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Header from "./components/root/Header";
 import Navigation from "./components/root/Navigation";
 import { useUser } from "./hooks";
+import 'react-tabs/style/react-tabs.css';
 
 const Root = () => {
   const user = useUser();

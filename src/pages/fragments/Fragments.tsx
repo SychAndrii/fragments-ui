@@ -23,20 +23,12 @@ export async function fragmentsAction({ request }: { request: Request }) {
       'Content-Type': type
     },
     body: text
-  })
-
-  return makeAPIRequest(
-    "/fragments",
-    "POST",
-    {
-      "Content-Type": type,
-    },
-    text
-  );
+  });
 }
 
 const Fragments = () => {
   const data = useLoaderData() as AllFragmentsResponse;
+console.log(data);
 
   return (
     <>
