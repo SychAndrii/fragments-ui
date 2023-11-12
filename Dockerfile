@@ -18,13 +18,13 @@ FROM node:21-alpine3.17@sha256:c8e4f0ad53631bbf60449e394a33c5b8b091343a8702bd036
 
 WORKDIR /app
 
-# Copy cached dependencies from previous stage so we don't have to download
-COPY --from=dependencies . .
+# Copy over the node modules from the dependencies stage
+COPY --from=dependencies /app/node_modules ./node_modules
 
 # Copy source code into the image
 COPY --chown=nginx:nginx . .
 
-# Build the serever
+# Build the server
 RUN npm run build
 
 # Stage 2: Running
