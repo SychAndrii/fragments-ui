@@ -5,6 +5,8 @@ FROM node:21-alpine3.17@sha256:c8e4f0ad53631bbf60449e394a33c5b8b091343a8702bd036
 LABEL maintainer="Andrii Sych <asych@myseneca.ca>" \
       description="Fragments node.js front-end"
 
+WORKDIR /app
+
 # Copy the package.json and package-lock.json
 COPY --chown=nginx:nginx package.json package-lock.json ./
 
@@ -13,6 +15,8 @@ RUN npm ci --only=production
 
 #Stage 1: Build
 FROM node:21-alpine3.17@sha256:c8e4f0ad53631bbf60449e394a33c5b8b091343a8702bd03615c7c13ae4c445d AS build
+
+WORKDIR /app
 
 # Copy cached dependencies from previous stage so we don't have to download
 COPY --from=dependencies . .
@@ -25,6 +29,8 @@ RUN npm run build
 
 # Stage 2: Running
 FROM nginx:1.25.3-alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63332c3d0bf7a4bb77 as running
+
+WORKDIR /app
 
 ENV PORT=5173 \
     NODE_ENV=production \
