@@ -1,19 +1,30 @@
-# Start with nginx on Debian
-FROM nginx:stable
+#Stage 0: Dependencies
+FROM node:21-alpine3.17@sha256:c8e4f0ad53631bbf60449e394a33c5b8b091343a8702bd03615c7c13ae4c445d AS dependencies
 
-# Pick a version: 19, 18, 17, 16, 14, 12, lts, current, see:
-# https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
-ARG NODE_VERSION=16
+#Metadata
+LABEL maintainer="Andrii Sych <asych@myseneca.ca>" \
+      description="Fragments node.js front-end"
 
-# Set shell to handle pipe failures
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# Copy the package.json and package-lock.json
+COPY --chown=nginx:nginx package.json package-lock.json ./
 
-# Install node.js and a build toolchain via apt-get, cleaning up when done
-RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-    build-essential=12.9 \ 
-    && rm -rf /var/lib/apt/lists/*
+# Install node dependencies defined in package-lock.json
+RUN npm ci --only=production
+
+#Stage 1: Build
+FROM node:21-alpine3.17@sha256:c8e4f0ad53631bbf60449e394a33c5b8b091343a8702bd03615c7c13ae4c445d AS build
+
+# Copy cached dependencies from previous stage so we don't have to download
+COPY --from=dependencies . .
+
+# Copy source code into the image
+COPY --chown=nginx:nginx . .
+
+# Build the serever
+RUN npm run build
+
+# Stage 2: Running
+FROM nginx:1.25.3-alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63332c3d0bf7a4bb77 as running
 
 ENV PORT=5173 \
     NODE_ENV=production \
@@ -31,17 +42,9 @@ ENV PORT=5173 \
 WORKDIR /usr/local/src/fragments-ui
 
 # Copy all of our source in
-COPY . .
+COPY --from=build . .
 
-# Install node dependencies defined in package.json and package-lock.json
-RUN npm ci
-
-# Run the parcel build in order to create ./dist, then
-# copy all of the contents of dist/ to the location where
-# nginx expects to find our HTML web content.  See
-# https://explainshell.com/explain?cmd=cp+-a+.%2Fdist%2F.+%2Fusr%2Fshare%2Fnginx%2Fhtml%2F
-RUN npm run build && \
-    cp -a ./dist/. /usr/share/nginx/html/
+RUN cp -a ./dist/. /usr/share/nginx/html/
 
 # nginx will be running on port 80
 EXPOSE 80
