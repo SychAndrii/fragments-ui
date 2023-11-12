@@ -1,6 +1,7 @@
 import { Link, useLoaderData } from "react-router-dom";
 import makeAPIRequest from "../../utils/makeAPIRequest";
 import AllFragmentsResponse from "../../interface/api/AllFragmentsResponse";
+import { getUser } from "../../auth";
 
 export async function fragmentsLoader() {
   return makeAPIRequest("/fragments?expand=1");
@@ -8,8 +9,21 @@ export async function fragmentsLoader() {
 
 export async function fragmentsAction({ request }: { request: Request }) {
   const formData = (await request.formData());
+  const user = await getUser();
+  const url = `${import.meta.env.VITE_API_URL}/fragments`;
   const text = formData.get("text") as string;
   const type = formData.get("type") as string;
+  console.log(type);
+  
+
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      ...user?.authorizationHeaders(),
+      'Content-Type': type
+    },
+    body: text
+  })
 
   return makeAPIRequest(
     "/fragments",
