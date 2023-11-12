@@ -13,6 +13,7 @@ export default async function makeAPIRequest<T>(
 
   // Ensure body is a string if it's not undefined
   const requestBody = body !== undefined ? JSON.stringify(body) : undefined;
+  console.log("Sending payload:", requestBody);
 
   return fetch(url, {
     body: requestBody,
