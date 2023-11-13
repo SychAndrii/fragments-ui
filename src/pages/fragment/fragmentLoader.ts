@@ -1,9 +1,15 @@
 import { LoaderFunctionArgs, Params } from "react-router-dom";
-import makeAPIRequest from "../../utils/makeAPIRequest";
+import { getUser } from "../../auth";
 
 export default async function fragmentLoader(args: LoaderFunctionArgs<Params>) {
     const { params } = args;
-    const res = await makeAPIRequest(`/fragments/${params.id}`);
+    const user = await getUser();
+    
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/fragments/${params.id}`, {
+      headers: {
+        ...user?.authorizationHeaders()
+      }
+    });
     const content = await res.text();
     const location = `${import.meta.env.VITE_API_URL}/fragments/${params.id}`;
     const type = res.headers.get("Content-Type");

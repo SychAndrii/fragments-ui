@@ -3,7 +3,7 @@ import FragmentBodyDisplayer from "./FragmentBodyDisplayer";
 import contentType from 'content-type';
 import { Form } from "react-router-dom";
 import { useState } from "react";
-import makeAPIRequest from "./makeAPIRequest";
+import { getUser } from "../auth";
 
 const validConversions = {
     'text/markdown': ['html'],
@@ -30,7 +30,13 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
 
                 async function updateContents() {
                     const conversion = accessibleConversions[index - 1];
-                    const res = await makeAPIRequest(`/fragments/${id}.${conversion}`);
+                    const user = await getUser();
+
+                    const res = await fetch(`${import.meta.env.VITE_API_URL}/fragments/${id}.${conversion}`, {
+                        headers: {
+                            ...user?.authorizationHeaders()
+                        }
+                    });
                     const content = await res.text();
 
                     setContents({

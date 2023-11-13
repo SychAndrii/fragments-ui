@@ -11,6 +11,7 @@ import IndexError from "./pages/index/IndexError";
 import Index from "./pages/index/Index";
 import indexLoader from "./pages/index/indexLoader";
 import fragmentLoader from "./pages/fragment/fragmentLoader";
+import fragmentsLoader from "./pages/fragments/fragmentsLoader";
 import fragmentsAction from "./pages/fragments/fragmentsAction";
 import Fragments from "./pages/fragments/Fragments";
 import AddFragment from "./pages/fragment-add/AddFragment";
@@ -36,7 +37,7 @@ const router = createBrowserRouter(
               <Fragments />
             </RouteGuard>
           }
-          loader={fragmentLoader}
+          loader={fragmentsLoader}
           action={fragmentsAction}
           path="/fragments"
         />
