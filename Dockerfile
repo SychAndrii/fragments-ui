@@ -32,17 +32,10 @@ FROM nginx:1.25.3-alpine@sha256:db353d0f0c479c91bd15e01fc68ed0f33d9c4c52f3415e63
 
 WORKDIR /app
 
-ENV PORT=5173 \
+ENV PORT=80 \
     NODE_ENV=production \
     NPM_CONFIG_LOGLEVEL=warn \
-    NPM_CONFIG_COLOR=false \
-    VITE_URL=http://ec2-52-207-17-128.compute-1.amazonaws.com:8080 \
-    VITE_API_URL=http://ec2-52-207-17-128.compute-1.amazonaws.com:8080/v1 \
-    VITE_AWS_COGNITO_POOL_ID=us-east-1_gMqT5XCbL \
-    VITE_AWS_COGNITO_CLIENT_ID=37rrps2erls3dfstt70c9i59n9 \
-    VITE_AWS_COGNITO_HOSTED_UI_DOMAIN=asych-fragments.auth.us-east-1.amazoncognito.com \
-    VITE_OAUTH_SIGN_IN_REDIRECT_URL=http://localhost:5173 \
-    VITE_OAUTH_SIGN_OUT_REDIRECT_URL=http://localhost:5173
+    NPM_CONFIG_COLOR=false 
 
 # Copy all of our source including the dist directory
 COPY --from=build /app/dist /usr/share/nginx/html/
