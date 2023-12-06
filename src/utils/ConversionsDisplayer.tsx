@@ -8,7 +8,9 @@ import { getUser } from "../auth";
 const validConversions = {
     'text/markdown': ['html'],
 };
-const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, id: string }) => {
+const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string | Blob, id: string }) => {
+    console.log(data);
+    
     const shortType = contentType.parse(type).type;
     let accessibleConversions: string[] = [];
     const [contents, setContents] = useState<{
@@ -20,6 +22,7 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
     if (shortType in validConversions) {
         accessibleConversions = validConversions[shortType as keyof typeof validConversions];
     }
+    
 
     return (
         <Form>
@@ -56,7 +59,7 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
 
                 <TabPanel>
                     <div className=" max-w-6xl">
-                        <FragmentBodyDisplayer body={data} />
+                        <FragmentBodyDisplayer type={type} content={data} />
                     </div>
                 </TabPanel>
                 {
@@ -64,7 +67,7 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string, 
                         return (
                             <TabPanel key={index}>
                                 <div className=" max-w-6xl">
-                                    <FragmentBodyDisplayer body={contents[conversion]} />
+                                    <FragmentBodyDisplayer type={type} content={contents[conversion]} />
                                 </div>
                             </TabPanel>
                         )

@@ -5,7 +5,7 @@ import HealthCheckResponse from "../../interface/api/HealthCheckResponse";
 
 function Index() {
   const data = useLoaderData() as HealthCheckResponse;
-
+  
   return (
     <div>
       <div className=" text-regular text-md">
