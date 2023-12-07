@@ -22,6 +22,7 @@ import UserProvider from "./providers/UserProvider";
 import RouteGuard from "./RouteGuard";
 import UpdateFragment from "./pages/fragment-update/UpdateFragment";
 import '../style.css'
+import deleteAction from "./pages/fragment-delete/deleteAction";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -70,6 +71,10 @@ const router = createBrowserRouter(
                 <UpdateFragment />
               </RouteGuard>
             }
+          />
+          <Route
+            path=":id/delete"
+            action={deleteAction}
           />
         </Route>
       </Route>

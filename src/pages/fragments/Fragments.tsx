@@ -1,10 +1,11 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useFetcher, useLoaderData } from "react-router-dom";
 import AllFragmentsResponse from "../../interface/api/AllFragmentsResponse";
 import dateFormatter from "../../utils/dateFormatter";
+import Button from "../../components/ui/Button";
 
 const Fragments = () => {
   const data = useLoaderData() as AllFragmentsResponse;
-  console.log(data);
+  const fetch = useFetcher();
 
   return (
     <>
@@ -31,6 +32,9 @@ const Fragments = () => {
               <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Details</span>
               </th>
+              <th scope="col" className="px-6 py-3">
+                <span className="sr-only">Delete</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -56,8 +60,13 @@ const Fragments = () => {
                     to={`/fragment/${f.id}`}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
-                    See Body
+                    Details
                   </Link>
+                </td>
+                <td className="px-6 py-4 text-right">
+                  <fetch.Form method="post" action={`/fragment/${f.id}/delete`}>
+                    <Button value="redirect" type="submit" className=' ml-5 self-start' text="Delete" />
+                  </fetch.Form>
                 </td>
               </tr>
             ))}
