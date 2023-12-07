@@ -6,8 +6,13 @@ import { useState } from "react";
 import { getUser } from "../auth";
 
 const validConversions = {
-    'text/markdown': ['html'],
-    'image/png': ['jpg', 'webp', 'gif']
+    'text/markdown': ['html', 'txt'],
+    'text/html': ['txt'],
+    'application/json': ['txt'],
+    'image/png': ['jpg', 'webp', 'gif'],
+    'image/jpeg': ['png', 'webp', 'gif'],
+    'image/webp': ['png', 'jpg', 'gif'],
+    'image/gif': ['png', 'jpg', 'webp'],
 };
 const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string | Blob, id: string }) => {
     console.log(data);
