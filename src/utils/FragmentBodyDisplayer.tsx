@@ -19,8 +19,11 @@ const FragmentBodyDisplayer = ({ content }: { content: Blob | string }) => {
   if (content instanceof Blob && src) {
     return <img src={src} alt="Fragment could not be loaded!" />;
   }
-
-  return <span>content</span>;
+  else if(content instanceof Blob) {
+    return <h1>Cannot display this image!</h1>
+  }
+  
+  return <span>{content}</span>;
 }
 
 export default FragmentBodyDisplayer;
