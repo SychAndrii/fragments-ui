@@ -11,6 +11,8 @@ export default async function fragmentLoader(args: LoaderFunctionArgs<Params>) {
       }
     });
     const type = res.headers.get("Content-Type");
+    console.log(type);
+    
     
     const content = !type?.startsWith('text') ? await res.blob() : await res.text();
     console.log(content);

@@ -7,6 +7,7 @@ import { getUser } from "../auth";
 
 const validConversions = {
     'text/markdown': ['html'],
+    'image/png': ['jpg']
 };
 const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string | Blob, id: string }) => {
     console.log(data);
@@ -14,7 +15,7 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string |
     const shortType = contentType.parse(type).type;
     let accessibleConversions: string[] = [];
     const [contents, setContents] = useState<{
-        [key: string]: string
+        [key: string]: string | Blob
     }>({
 
     });
@@ -22,6 +23,8 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string |
     if (shortType in validConversions) {
         accessibleConversions = validConversions[shortType as keyof typeof validConversions];
     }
+    
+    console.log(contents);
     
 
     return (
@@ -40,7 +43,10 @@ const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string |
                             ...user?.authorizationHeaders()
                         }
                     });
-                    const content = await res.text();
+
+                    const content = type.startsWith('image') ? await res.blob() : await res.text();
+                    console.log(content);
+                    
 
                     setContents({
                         ...contents,

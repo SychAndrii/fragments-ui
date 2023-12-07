@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 
 const FragmentBodyDisplayer = ({ content }: { content: Blob | string }) => {
   const [src, setSrc] = useState<string | null>(null);
+  console.log(typeof content);
+  
 
   useEffect(() => {
     if (content instanceof Blob) {
