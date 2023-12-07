@@ -1,10 +1,10 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import FragmentResponse from "../../interface/api/FragmentResponse";
 import ConversionsDisplayer from "../../utils/ConversionsDisplayer";
 
 const Fragment = () => {
   const data = useLoaderData() as FragmentResponse;
-  console.log(data);
+
 
   return (
     <>
@@ -32,9 +32,9 @@ const Fragment = () => {
           <b>{data.location}</b>
         </span>
       </h3>
-      <h3>
-        Content:{" "}
-      </h3>
+      <Link to={{
+        pathname: `/fragment/${data.id}/update`
+      }} state={data}>Update fragment</Link>
       <ConversionsDisplayer type={data.type} data={data.content} id={data.id} />
     </>
   );

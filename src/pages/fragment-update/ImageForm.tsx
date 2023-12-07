@@ -1,7 +1,9 @@
 import Button from '../../components/ui/Button'
 import { Form } from 'react-router-dom'
 
-const ImageForm = () => {
+const ImageForm = ({id}: {
+    id: string
+}) => {
   return (
     <>
       <Form method="post" action="/fragments" encType="multipart/form-data">

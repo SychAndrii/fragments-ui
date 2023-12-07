@@ -6,11 +6,15 @@ type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const Button = ({ text, clickHandler, ...rest }: Props) => {
+  const {
+    className,
+    ...restCopy
+  } = rest;
   return (
     <button
       onClick={clickHandler}
-      {...rest}
-      className=" disabled:bg-highlightDimmed bg-highlight text-[white] py-2 px-4 rounded-md hover:bg-highlightDarken"
+      className={` disabled:bg-highlightDimmed bg-highlight text-[white] py-2 px-4 rounded-md hover:bg-highlightDarken ${className}`}
+      {...restCopy}
     >
       {text}
     </button>

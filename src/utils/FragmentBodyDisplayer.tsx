@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const FragmentBodyDisplayer = ({ content, type }: { content: Blob | string, type: string }) => {
+const FragmentBodyDisplayer = ({ content }: { content: Blob | string }) => {
   const [src, setSrc] = useState<string | null>(null);
 
   useEffect(() => {
@@ -14,16 +14,13 @@ const FragmentBodyDisplayer = ({ content, type }: { content: Blob | string, type
       };
     }
   }, [content]);
-
-  console.log(content);
-  console.log(type);
   
 
-  if (type.startsWith('image') && src) {
-    return <img src={src} alt="Fragment" />;
+  if (content instanceof Blob && src) {
+    return <img src={src} alt="Fragment could not be loaded!" />;
   }
 
-  return <span>{typeof content === 'string' ? content : ''}</span>;
+  return <span>content</span>;
 }
 
 export default FragmentBodyDisplayer;

@@ -13,12 +13,14 @@ import indexLoader from "./pages/index/indexLoader";
 import fragmentLoader from "./pages/fragment/fragmentLoader";
 import fragmentsLoader from "./pages/fragments/fragmentsLoader";
 import fragmentsAction from "./pages/fragments/fragmentsAction";
+import fragmentAction from "./pages/fragment/fragmentAction";
 import Fragments from "./pages/fragments/Fragments";
 import AddFragment from "./pages/fragment-add/AddFragment";
 import Error from "./Error";
 import Fragment from "./pages/fragment/Fragment";
 import UserProvider from "./providers/UserProvider";
 import RouteGuard from "./RouteGuard";
+import UpdateFragment from "./pages/fragment-update/UpdateFragment";
 import '../style.css'
 
 const router = createBrowserRouter(
@@ -58,6 +60,16 @@ const router = createBrowserRouter(
               </RouteGuard>
             }
             loader={fragmentLoader}
+            action={fragmentAction}
+          >
+          </Route>
+          <Route
+            path=":id/update"
+            element={
+              <RouteGuard>
+                <UpdateFragment />
+              </RouteGuard>
+            }
           />
         </Route>
       </Route>
