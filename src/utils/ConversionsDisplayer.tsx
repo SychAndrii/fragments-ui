@@ -7,7 +7,7 @@ import { getUser } from "../auth";
 
 const validConversions = {
     'text/markdown': ['html'],
-    'image/png': ['jpg']
+    'image/png': ['jpg', 'webp', 'gif']
 };
 const ConversionsDisplayer = ({ type, data, id }: { type: string, data: string | Blob, id: string }) => {
     console.log(data);

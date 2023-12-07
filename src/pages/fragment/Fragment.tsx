@@ -6,6 +6,8 @@ import Button from "../../components/ui/Button";
 const Fragment = () => {
   const data = useLoaderData() as FragmentResponse;
   const navigate = useNavigate();
+  console.log(data.content);
+  
 
   return (
     <>

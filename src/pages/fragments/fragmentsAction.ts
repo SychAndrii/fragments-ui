@@ -7,14 +7,12 @@ export default async function fragmentsAction({ request }: { request: Request })
 
   const contentItem = formData.get("content");
   let fragmentType: string;
-  let body: string | Blob;
+  const body: string | Blob | null = contentItem;
 
   if (typeof contentItem === 'string') {
     fragmentType = formData.get("type") as string;
-    body = contentItem;
   } else if (contentItem instanceof File) {
     fragmentType = contentItem.type;
-    body = contentItem;
   } else {
     throw new Error('Unexpected content type');
   }
